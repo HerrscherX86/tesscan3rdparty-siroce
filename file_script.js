@@ -1,6 +1,6 @@
 // Konfigurasi Supabase Anda (Ganti dengan URL dan Anon Key Anda)
-const SUPABASE_URL = 'https://vhpuqbmleujbtedyjzew.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZocHVxYm1sZXVqYnRlZHlqemV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ1NDg4MzMsImV4cCI6MjA3MDEyNDgzM30.UNVGrtBEGMWlqZqYEeCRm2BFDH5xDbo3HnfOHYAGJC0';
+const SUPABASE_URL = 'https://siroce-api.rizq.online/';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAiYW5vbiIsCiAgICAiaXNzIjogInN1cGFiYXNlIiwKICAgICJpYXQiOiAxNzU4MDM4NDAwLAogICAgImV4cCI6IDE5MTU4MDQ4MDAKfQ.jF6erVsb6ppoi8lP6w5FgIFUSk74TJhlAkKf8zA-980';
 
 // Inisialisasi klien Supabase
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);

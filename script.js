@@ -26,7 +26,7 @@ async function fetchDataFromSupabase() {
 
     const { data, error } = await supabaseClient
         .from('Folder')
-        .select('*, box:nama_box')
+        .select('*')
         .eq('box_id', uuid);
 
     if (error) {
@@ -36,20 +36,20 @@ async function fetchDataFromSupabase() {
     }
 
     if (data && data.length > 0) {
-        // Ambil nama_box dari relasi box atau dari data pertama jika sudah join
-        let namaBox = data[0].box ? data[0].box.nama_box : (data[0].nama_box || '');
         let htmlContent = `
             <h1>List Folder</h1>
-            <p><strong>Box:</strong> ${namaBox}</p>
+            <p><strong>Box Id:</strong> ${data[0].box_id}</p>
             <hr>
         `;
 
         // Lakukan perulangan untuk setiap item di dalam array data
         data.forEach(item => {
+            // Gunakan <a> tag untuk membuat link yang dapat diklik
             htmlContent += `
                 <a href="file.html?folder_id=${item.id}">
                     <div>
-                        <h3>Folder ke- ${item.nama_folder}</h3>
+                        <h3>Folder ID: ${item.id}</h3>
+                        <p><strong>Nomor Folder:</strong> ${item.nama_folder}</p>
                     </div>
                 </a>
                 <hr>
@@ -57,6 +57,7 @@ async function fetchDataFromSupabase() {
         });
 
         contentContainer.innerHTML = htmlContent;
+
     } else {
         contentContainer.innerHTML = `<p class="error-text">Data tidak ditemukan.</p>`;
     }

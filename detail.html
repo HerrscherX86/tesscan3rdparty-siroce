@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail File</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            background: #f7faff;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+            color: #fff;
+            padding: 32px 0 24px 0;
+            text-align: center;
+            font-size: 2.2rem;
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            box-shadow: 0 2px 12px rgba(25, 118, 210, 0.13);
+            text-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
+        }
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 32px 28px 28px 28px;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(25, 118, 210, 0.10);
+        }
+        h1 {
+            color: #1976d2;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+            color: #fff;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.2);
+        }
+        .btn-back:hover {
+            background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+            transform: translateY(-1px);
+        }
+        .section-divider {
+            border: none;
+            border-top: 1px solid #e0e0e0;
+            margin: 24px 0;
+        }
+        .detail-card {
+            background: #e3f0ff;
+            border-radius: 12px;
+            padding: 24px 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 18px rgba(25, 118, 210, 0.13);
+            border: 1.5px solid #90caf9;
+        }
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .detail-item {
+            background: #fff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border-left: 4px solid #1976d2;
+        }
+        .detail-item label {
+            font-weight: 600;
+            color: #1976d2;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .detail-item .value {
+            color: #333;
+            font-size: 0.95rem;
+            word-break: break-word;
+        }
+        .file-icon {
+            display: inline-block;
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+        .loading-spinner {
+            border: 3px solid #e3f0ff;
+            border-top: 3px solid #1976d2;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text, .error-text {
+            text-align: center;
+            font-style: italic;
+            color: #90caf9;
+        }
+        .error-text { color: #d32f2f; }
+        .footer {
+            text-align: center;
+            padding: 24px;
+            color: #757575;
+            font-size: 0.9rem;
+            background: #fff;
+            margin-top: 40px;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+        }
+        .footer strong {
+            color: #1976d2;
+        }
+        .pdf-viewer-container {
+            margin: 24px 0;
+            border: 1.5px solid #90caf9;
+            border-radius: 12px;
+            background: #f8f9fa;
+            display: none;
+            overflow: hidden;
+        }
+        .pdf-viewer-header {
+            background: #1976d2;
+            color: #fff;
+            padding: 12px 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .pdf-viewer-content {
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 16px;
+            background: #fff;
+        }
+        .pdf-page {
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .pdf-page canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .page-number {
+            background: #e3f0ff;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            color: #1976d2;
+            font-weight: 500;
+            text-align: center;
+        }
+        .pdf-loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        .pdf-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .zoom-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .zoom-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        @media (max-width: 768px) {
+            .header {
+                font-size: 1.6rem;
+                padding: 24px 16px 16px 16px;
+                letter-spacing: 1px;
+            }
+            .container {
+                margin: 24px 16px;
+                padding: 24px 20px;
+                border-radius: 14px;
+            }
+            h1 {
+                font-size: 1.3rem;
+            }
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn-back {
+                padding: 6px 14px;
+                font-size: 0.9rem;
+            }
+            .pdf-viewer-content {
+                max-height: 60vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">SIROCE - Detail File</div>
+    <div class="container">
+        <a href="javascript:history.back()" class="btn-back">&larr; Kembali</a>
+        <div id="detail-container">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Memuat detail file...</p>
+        </div>
+        
+        <div id="pdf-viewer-container" class="pdf-viewer-container">
+            <div class="pdf-viewer-header">
+                <span>📄 Pratinjau Dokumen PDF</span>
+                <div class="pdf-controls">
+                    <button class="zoom-btn" onclick="changePdfZoom(-0.2)">🔍-</button>
+                    <span id="zoom-level">100%</span>
+                    <button class="zoom-btn" onclick="changePdfZoom(0.2)">🔍+</button>
+                </div>
+            </div>
+            <div id="pdf-viewer-content" class="pdf-viewer-content">
+                <div class="pdf-loading">Memuat pratinjau PDF...</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <strong>SIROCE</strong> (Sistem Record Centre)<br>
+        TVRI Kalimantan Selatan<br>
+        Arsip Digital © 2025
+    </div>
+    
+    <script src="https://unpkg.com/@supabase/supabase-js"></script>
+    
+    <!-- Load PDF.js locally -->
+    <script src="pdfjs/pdf.min.js"></script>
+    <script>
+        // Configure PDF.js worker
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof pdfjsLib !== 'undefined') {
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdfjs/pdf.worker.min.js';
+                console.log('PDF.js loaded locally and worker configured');
+            } else {
+                console.error('PDF.js failed to load from local files');
+            }
+        });
+    </script>
+    
+    <script src="detail_script.js"></script>
+</body>
+</html>
